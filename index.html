@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Request</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#0f172a,#1e293b,#0f766e,#1e3a8a);
+background-size:400% 400%;
+animation:bg 10s ease infinite;
+color:white;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+text-align:center;
+width:90%;
+max-width:800px;
+z-index:2;
+}
+
+h1{
+font-size:3rem;
+margin-bottom:20px;
+}
+
+p{
+font-size:1.2rem;
+margin-bottom:20px;
+}
+
+button{
+padding:15px 30px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+font-size:18px;
+margin:10px;
+transition:.3s;
+}
+
+.yes{
+background:#22c55e;
+color:white;
+}
+
+.no{
+background:#ef4444;
+color:white;
+position:absolute;
+}
+
+.next{
+background:white;
+color:black;
+}
+
+.hidden{
+display:none;
+}
+
+select{
+padding:15px;
+border:none;
+border-radius:10px;
+font-size:18px;
+margin-top:15px;
+}
+
+.floating{
+position:absolute;
+font-size:30px;
+animation:float 10s linear infinite;
+opacity:.7;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+.success{
+font-size:5rem;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.2);
+}
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div id="page1">
+
+<h1>👨‍💻 Hello Mr Elijah</h1>
+
+<p>Can I come to your place next week?</p>
+
+<button class="yes" onclick="showDayPage()">
+Yes ✅
+</button>
+
+<button class="no" id="noBtn">
+No ❌
+</button>
+
+</div>
+
+<div id="page2" class="hidden">
+
+<h1>📅 What day works best?</h1>
+
+<select id="day">
+
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+<option>Saturday</option>
+<option>Sunday</option>
+
+</select>
+
+<br>
+
+<button class="next" onclick="showTimePage()">
+Next →
+</button>
+
+</div>
+
+<div id="page3" class="hidden">
+
+<h1>⏰ What time works best?</h1>
+
+<select id="time">
+
+<option>1 PM</option>
+<option>2 PM</option>
+<option>3 PM</option>
+<option>4 PM</option>
+<option>5 PM</option>
+<option>6 PM</option>
+<option>7 PM</option>
+<option>8 PM</option>
+
+</select>
+
+<br>
+
+<button class="next" onclick="finishForm()">
+Submit 🚀
+</button>
+
+</div>
+
+<div id="page4" class="hidden">
+
+<div class="success">
+🎉
+</div>
+
+<h1>Thank You!</h1>
+
+<p id="summary"></p>
+
+<p>
+Thank you for the invitation.<br>
+Your response has been recorded successfully.<br><br>
+
+Looking forward to meeting with you next week.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",()=>{
+
+let x=Math.random()*(window.innerWidth-150);
+let y=Math.random()*(window.innerHeight-100);
+
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+});
+
+function showDayPage(){
+
+document.getElementById("page1").classList.add("hidden");
+document.getElementById("page2").classList.remove("hidden");
+
+}
+
+function showTimePage(){
+
+document.getElementById("page2").classList.add("hidden");
+document.getElementById("page3").classList.remove("hidden");
+
+}
+
+function finishForm(){
+
+let day=document.getElementById("day").value;
+let time=document.getElementById("time").value;
+
+document.getElementById("summary").innerHTML=
+"📅 Selected Day: <b>"+day+
+"</b><br><br>⏰ Selected Time: <b>"+time+"</b>";
+
+document.getElementById("page3").classList.add("hidden");
+document.getElementById("page4").classList.remove("hidden");
+
+}
+
+function createFloating(){
+
+const icons=["💻","💰","🚀","⚡","{ }"];
+
+const item=document.createElement("div");
+
+item.classList.add("floating");
+
+item.innerHTML=icons[Math.floor(Math.random()*icons.length)];
+
+item.style.left=Math.random()*100+"vw";
+
+item.style.fontSize=(Math.random()*30+20)+"px";
+
+item.style.animationDuration=
+(Math.random()*5+5)+"s";
+
+document.body.appendChild(item);
+
+setTimeout(()=>{
+item.remove();
+},10000);
+
+}
+
+setInterval(createFloating,500);
+
+</script>
+
+</body>
+</html>
